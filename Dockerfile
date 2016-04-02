@@ -13,18 +13,18 @@ RUN apt-get update -q --fix-missing
 RUN apt-get -y upgrade
 
 #Install apache2 php
-RUN apt-get install -y apache2 curl libapache2-mod-php5 php5-curl php5-gd php5-mysql rsync mysqli opcache -qq
+RUN apt-get install -y apache2 curl libapache2-mod-php5 php5-curl php5-gd php5-mysql rsync mysql-client -qq
 
 #set recommended php.ini settings
 #copied from wordpress project
-RUN { \
-		echo 'opcache.memory_consumption=128'; \
-		echo 'opcache.interned_strings_buffer=8'; \
-		echo 'opcache.max_accelerated_files=4000'; \
-		echo 'opcache.revalidate_freq=60'; \
-		echo 'opcache.fast_shutdown=1'; \
-		echo 'opcache.enable_cli=1'; \
-	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
+#RUN { \
+#		echo 'opcache.memory_consumption=128'; \
+#		echo 'opcache.interned_strings_buffer=8'; \
+#		echo 'opcache.max_accelerated_files=4000'; \
+#		echo 'opcache.revalidate_freq=60'; \
+#		echo 'opcache.fast_shutdown=1'; \
+#		echo 'opcache.enable_cli=1'; \
+#	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 RUN a2enmod rewrite
 RUN a2enmod expires
