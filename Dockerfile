@@ -1,10 +1,10 @@
 FROM ubuntu:14.04
 MAINTAINER gnesis@163.com
 
-#add 163 mirror for apt
+#add 163 mirror for apt, remove before commit
 ADD sources.list /etc/apt/sources.list
-ADD .bashrc /root/.bashrc
 
+ADD .bashrc /root/.bashrc
 ENV DEBIAN_FRONTEND noninteractive
 
 # Packages
@@ -47,6 +47,7 @@ ENV APACHE_LOG_DIR /var/log/apache2
 ENV LANG C
 
 RUN mkdir -p $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR
+RUN chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP /var/www/html
 
 RUN find "$APACHE_CONFDIR" -type f -exec sed -ri ' \
         s!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g; \
